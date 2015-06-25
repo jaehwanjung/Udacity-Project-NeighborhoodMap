@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <!-- Forces the browser the render at whatever the most recent version's standards are -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- This means that the browser will (probably) render the width of the page at the width of its own screen -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>My Neighbourhood</title>
+
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYFVxtFk26wbfNGXDY2JWcQWx-0EXyRz4"></script>
+    <script type="text/javascript">
+        function initialize() {
+            var mapOptions = {
+                center: {lat: -34.397, lng: 150.644},
+                zoom: 8
+            };
+            var map = new google.maps.Map(document.getElementById('map-container'),
+                    mapOptions);
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" style="color: white;" href="#">My Neighbourhood</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <div class="input-group" style="width:200%;">
+                        <input type="text" class="form-control" placeholder="Neighbourhood, City, Postal Code...">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </span>
+                    </div>
+                </div>
+            </form>
+            <div class="navbar-form navbar-right" data-bind="foreach: displayedFilters">
+                <button type="button" class="btn btn-default"><span data-bind="text: name"></span></button>
+            </div>
+        </div>
+    </div>
+</nav>
+<div id="map-container" style="width:100%;height:80vh;"></div>
+<div class="container" id="result-container">
+    Search result goes here
+</div>
+
+<script src="scripts/app.js"></script>
+</body>
+</html>

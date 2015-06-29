@@ -9,91 +9,22 @@
 
     <title>My Neighbourhood</title>
 
-    <!-- Latest compiled and minified Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href="styles/style.css" rel="stylesheet" type="text/css">
 
-    <script type="text/javascript">
-        var map;
-
-        function initialize() {
-            var mapOptions = {
-                zoom: 14
-            };
-            map = new google.maps.Map(document.getElementById('map-container'),
-                    mapOptions);
-
-            // Try HTML5 geolocation
-            if(navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    var pos = new google.maps.LatLng(position.coords.latitude,
-                            position.coords.longitude);
-
-                    map.setCenter(pos);
-                }, function() {
-                    handleNoGeolocation(true);
-                });
-            } else {
-                // Browser doesn't support Geolocation
-                handleNoGeolocation(false);
-            }
-        }
-
-        function handleNoGeolocation(errorFlag) {
-            if (errorFlag) {
-                var content = 'Error: The Geolocation service failed.';
-            } else {
-                var content = 'Error: Your browser doesn\'t support geolocation.';
-            }
-
-            var options = {
-                map: map,
-                position: new google.maps.LatLng(60, 105),
-                content: content
-            };
-
-            map.setCenter(options.position);
-        }
-
-        function loadScript() {
-            var script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDYFVxtFk26wbfNGXDY2JWcQWx-0EXyRz4&v=3.exp' +
-            '&signed_in=true&callback=initialize';
-            document.body.appendChild(script);
-        }
-
-        window.onload = loadScript;
-    </script>
+    <script type="text/javascript" src="scripts/map.js">    </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 </head>
+
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" style="color: white;" href="#">My Neighbourhood</a>
-        </div>
-        <div class="collapse navbar-collapse">
-            <form class="navbar-form navbar-left">
-                <div class="form-group">
-                    <div class="input-group" style="width:200%;">
-                        <input type="text" class="form-control" placeholder="Neighbourhood, City, Postal Code...">
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </span>
-                    </div>
-                </div>
-            </form>
-            <div class="navbar-form navbar-right" data-bind="foreach: displayedFilters">
-                <button type="button" class="btn btn-default"><span data-bind="text: name"></span></button>
-            </div>
-        </div>
-    </div>
-</nav>
-<div id="map-container" style="width:100%;height:80vh;"></div>
-<div class="container" id="result-container">
-    Search result goes here
+<div id="map-canvas"></div>
+
+<div class="address-bar">
+    <input data-bind="value: address" class="address-bar-area" placeholder="Enter your address">
+    <button class="address-search-button"></button>
 </div>
+
 
 <script src="scripts/app.js"></script>
 </body>

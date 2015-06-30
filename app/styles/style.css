@@ -10,18 +10,16 @@ html, body, #map-canvas {
     box-sizing: border-box;
 }
 
-.address-bar {
+.search-bar {
     box-shadow: 10px 10px 5px #888888;
-    max-width: 400px;
+    max-width: 300px;
     width: 100%;
     height: 30px;
-    left: 25px;
-    top: 30px;
     display: flex;
     position: fixed;
 }
 
-.address-bar-area {
+.search-bar-area {
     margin: 0;
     padding: 0 0 0 10px;
     border: none;
@@ -31,15 +29,15 @@ html, body, #map-canvas {
     line-height: 20px;
 }
 
-.address-bar-area:hover {
+.search-bar-area:hover {
     border: 1px solid #B2B2B2;
 }
 
-.address-bar-area:focus {
+.search-bar-area:focus {
     outline: 2px solid #FF9933;
 }
 
-.address-search-button {
+.search-bar-button {
     background: #FF9933 center no-repeat url("../images/search-icon.png");
     padding: 0;
     border: 0;
@@ -47,6 +45,16 @@ html, body, #map-canvas {
     height: 30px;
 }
 
-.address-search-button:hover {
+.search-bar-button:hover {
     background-color: #E68A2E;
+}
+
+.search-bar.address-bar {
+    left: 25px;
+    top: 30px;
+}
+
+.search-bar.filter-bar {
+    left: 25px;
+    top: 80px;
 }

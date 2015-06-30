@@ -20,11 +20,15 @@
 <body>
 <div id="map-canvas"></div>
 
-<div class="address-bar">
-    <input data-bind="value: address" class="address-bar-area" placeholder="Enter your address">
-    <button class="address-search-button"></button>
+<div class="search-bar address-bar">
+    <input data-bind="value: address" class="search-bar-area" placeholder="Enter your address">
+    <button class="search-bar-button"></button>
 </div>
 
+<div class="search-bar filter-bar">
+    <input data-bind="value: filter" class="search-bar-area" placeholder="Filter">
+    <button class="search-bar-button"></button>
+</div>
 
 <script src="scripts/app.js"></script>
 </body>

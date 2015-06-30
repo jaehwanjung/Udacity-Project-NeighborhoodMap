@@ -16,7 +16,7 @@
             navigator.geolocation.getCurrentPosition(function (position) {
                 var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-                googleMap.setCenter(pos);
+                map.setCenter(pos);
             }, function () {
                 handleNoGeolocation(true);
             });
@@ -26,20 +26,34 @@
         }
     };
 
-    map.setCenterByAddress = function(address){
-        geocoder.geocode( { 'address': address}, function(results, status) {
+    map.setCenterByAddress = function (address) {
+        geocoder.geocode({'address': address}, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 var location = results[0].geometry.location;
-                googleMap.setCenter(location);
-                var marker = new google.maps.Marker({
-                    position: location,
-                    map: googleMap,
-                    title: 'Your Location'
-                });
+                map.setCenter(location);
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);
             }
 
+        });
+    };
+
+    map.setCenter = function (location) {
+        googleMap.setCenter(location);
+        if (map.currentAddressMarker) {
+            map.currentAddressMarker.setMap(null);
+        }
+        map.currentAddressMarker = new google.maps.Marker({
+            position: location,
+            map: googleMap,
+            title: 'Your Location'
+        });
+        var contentString = "Your Location";
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+        google.maps.event.addListener(map.currentAddressMarker, 'click', function () {
+            infowindow.open(googleMap, map.currentAddressMarker);
         });
     };
 

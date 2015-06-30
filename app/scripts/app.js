@@ -43,6 +43,7 @@ var ViewModel = function () {
     function setNeighborhood(location) {
         googleMap.setCenter(location);
         setNeighborhoodMarker(location);
+        populateNeighborhood(location);
     }
 
     function setNeighborhoodMarker(location) {
@@ -61,6 +62,13 @@ var ViewModel = function () {
         google.maps.event.addListener(currentAddressMarker, 'click', function () {
             infowindow.open(googleMap, currentAddressMarker);
         });
+    }
+
+    function populateNeighborhood(){
+        var url = "https://api.foursquare.com/v2/venues/search?client_id=WD5S0ZAJQC3SHWEQYVZAXKQGMK0IWB3YESWWSGG24YDI54QV&client_secret=PG3H3TEYU4RFGFL24QNJMESWPOVAH4GED51SYO5YMH5JLERP&v=20130815&ll=40.7,-74&query=sushi";
+        $.getJSON(url, function(data){
+            alert(data);
+        })
     }
 
     function handleNoGeolocation() {

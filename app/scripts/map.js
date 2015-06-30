@@ -1,6 +1,7 @@
 (function () {
     var googleMap;
     var geocoder;
+    var autocommplete;
 
     window.map = {};
 
@@ -24,6 +25,10 @@
             // Browser doesn't support Geolocation
             handleNoGeolocation(false);
         }
+
+        autocomplete = new google.maps.places.Autocomplete(
+            /** @type {HTMLInputElement} */(document.getElementById('addressbar')),
+            { types: ['geocode'] });
     };
 
     map.setCenterByAddress = function (address) {
@@ -57,6 +62,10 @@
         });
     };
 
+    map.populateNeighborhood = function(location) {
+
+    };
+
     function handleNoGeolocation(errorFlag) {
         if (errorFlag) {
             var content = 'Error: The Geolocation service failed.';
@@ -77,9 +86,8 @@
         var script = document.createElement('script');
         script.type = 'text/javascript';
         script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDYFVxtFk26wbfNGXDY2JWcQWx-0EXyRz4&v=3.exp' +
-        '&signed_in=true&callback=map.initialize';
+        '&signed_in=true&libraries=places&callback=map.initialize';
         document.body.appendChild(script);
     }
 
-    window.onload = loadScript;
 })(window);

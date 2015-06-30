@@ -11,7 +11,7 @@
 
     <link href="styles/style.css" rel="stylesheet" type="text/css">
 
-    <script type="text/javascript" src="scripts/map.js">    </script>
+    <script type="text/javascript" src="scripts/map.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
@@ -20,13 +20,13 @@
 <body>
 <div id="map-canvas"></div>
 
-<div class="search-bar address-bar">
-    <input data-bind="value: address" class="search-bar-area" placeholder="Enter your address">
-    <button class="search-bar-button"></button>
-</div>
+<form class="search-bar address-bar">
+    <input id="addressbar" data-bind="submit: centerMap" class="search-bar-area" placeholder="Enter your address">
+    <button class="search-bar-button" data-bind="click: centerMap"></button>
+</form>
 
 <div class="search-bar filter-bar">
-    <input data-bind="value: filter" class="search-bar-area" placeholder="Filter">
+    <input data-bind="value: filter" class="search-bar-area" placeholder="Type in a keyword to filter by...">
     <button class="search-bar-button"></button>
 </div>
 

@@ -31,10 +31,22 @@ html, body, #map-canvas {
     line-height: 20px;
 }
 
+.address-bar-area:hover {
+    border: 1px solid #B2B2B2;
+}
+
+.address-bar-area:focus {
+    outline: 2px solid #FF9933;
+}
+
 .address-search-button {
-    background-color: #FF9933;
+    background: #FF9933 center no-repeat url("../images/search-icon.png");
     padding: 0;
     border: 0;
     width: 72px;
     height: 30px;
+}
+
+.address-search-button:hover {
+    background-color: #E68A2E;
 }

@@ -1,3 +1,11 @@
+var Venue = function(data) {
+    this.name = data.name;
+    this.contact = data.contact.formattedPhone;
+    this.location = data.location;
+    this.category = data.categories[0].name;
+    this.url = data.url;
+};
+
 var ViewModel = function () {
     var googleMap;
     var geocoder;
@@ -7,6 +15,7 @@ var ViewModel = function () {
     var self = this;
 
     self.filter = ko.observable('');
+    self.allVenues = ko.observableArray([]);
 
     self.initialize = function () {
         var mapOptions = {
@@ -50,25 +59,47 @@ var ViewModel = function () {
         if (currentAddressMarker) {
             currentAddressMarker.setMap(null);
         }
-        currentAddressMarker = new google.maps.Marker({
+        var contentString = "Your Location";
+        currentAddressMarker = createMarker('Your Location', location, contentString);
+    }
+
+    function createMarker(title, location, contentString){
+        var marker = new google.maps.Marker({
             position: location,
             map: googleMap,
-            title: 'Your Location'
+            title: title
         });
-        var contentString = "Your Location";
         var infowindow = new google.maps.InfoWindow({
             content: contentString
         });
-        google.maps.event.addListener(currentAddressMarker, 'click', function () {
-            infowindow.open(googleMap, currentAddressMarker);
+        google.maps.event.addListener(marker, 'click', function () {
+            infowindow.open(googleMap, marker);
         });
+        return marker;
     }
 
-    function populateNeighborhood(){
-        var url = "https://api.foursquare.com/v2/venues/search?client_id=WD5S0ZAJQC3SHWEQYVZAXKQGMK0IWB3YESWWSGG24YDI54QV&client_secret=PG3H3TEYU4RFGFL24QNJMESWPOVAH4GED51SYO5YMH5JLERP&v=20130815&ll=40.7,-74&query=sushi";
+    function populateNeighborhood(location){
+        var url = "https://api.foursquare.com/v2/venues/search?client_id=WD5S0ZAJQC3SHWEQYVZAXKQGMK0IWB3YESWWSGG24YDI54QV&client_secret=PG3H3TEYU4RFGFL24QNJMESWPOVAH4GED51SYO5YMH5JLERP&v=20130815&limit=20&section=topPicks&day=any&time=any&locale=en&ll=";
+        url = url + location.lat() + ',' + location.lng();
         $.getJSON(url, function(data){
-            alert(data);
+            if (data.meta.code == 200) {
+                var venuesFound = data.response.venues;
+                for(var i in venuesFound){
+                    var venue = new Venue(venuesFound[i]);
+                    self.allVenues.push(venue);
+                    var markerContentString = createMarkerContentString(venue);
+                    createMarker(venue.name, venue.location, markerContentString);
+                }
+            }
+            else {
+                //handleUnsuccessfulQuery();
+            }
         })
+    }
+
+    function createMarkerContentString(venue){
+        return '<p>' + venue.name + '</p>' +
+            '<p>' + venue.category + '</p>';
     }
 
     function handleNoGeolocation() {
@@ -92,7 +123,6 @@ var ViewModel = function () {
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);
             }
-
         });
     }
 

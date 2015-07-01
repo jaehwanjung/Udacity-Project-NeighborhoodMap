@@ -26,9 +26,18 @@
 </form>
 
 <div class="search-bar filter-bar">
-    <input data-bind="value: filter" class="search-bar-area" placeholder="Type in a keyword to filter by...">
+    <input data-bind="textInput : filterKeyword, hasFocus:isFilterSearchBoxSelected" class="search-bar-area" placeholder="Type in a keyword to filter by...">
     <button class="search-bar-button"></button>
 </div>
+
+<div class="search-bar-typeahead" data-bind="visible: isFilterSearchBoxSelected">
+    <ul class="search-bar-typeahead-list" data-bind="foreach: filterTypeaheadCategories">
+        <li>
+            <span data-bind="text: $data"></span>
+        </li>
+    </ul>
+</div>
+
 
 <script src="scripts/app.js"></script>
 </body>

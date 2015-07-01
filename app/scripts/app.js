@@ -14,8 +14,28 @@ var ViewModel = function () {
 
     var self = this;
 
-    self.filter = ko.observable('');
+    self.filterKeyword = ko.observable('');
     self.allVenues = ko.observableArray([]);
+    self.allCatagories = ko.computed(function(){
+        var allCategories = [];
+        for(var i in self.allVenues()){
+            var category  = self.allVenues()[i].category;
+            allCategories.push(category);
+        }
+        return allCategories;
+    });
+    self.filterTypeaheadCategories = ko.computed(function(){
+        var categories = [];
+        for(var i in self.allCatagories()){
+            var category = self.allCatagories()[i];
+            var filterKeyword = self.filterKeyword();
+            if (category.toLowerCase().includes(filterKeyword)){
+                categories.push(category);
+            }
+        }
+        return categories;
+    });
+    self.isFilterSearchBoxSelected = ko.observable(false);
 
     self.initialize = function () {
         var mapOptions = {

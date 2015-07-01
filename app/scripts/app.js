@@ -16,6 +16,7 @@ var ViewModel = function () {
 
     self.filterKeyword = ko.observable('');
     self.allVenues = ko.observableArray([]);
+
     self.allCatagories = ko.computed(function(){
         var allCategories = [];
         for(var i in self.allVenues()){
@@ -29,11 +30,22 @@ var ViewModel = function () {
         for(var i in self.allCatagories()){
             var category = self.allCatagories()[i];
             var filterKeyword = self.filterKeyword();
-            if (category.toLowerCase().includes(filterKeyword)){
+            if (filterKeyword == '' || category.toLowerCase().includes(filterKeyword)){
                 categories.push(category);
             }
         }
         return categories;
+    });
+    self.filteredVenues = ko.computed(function(){
+        var filteredVenues = [];
+        var filterTypeaheadCategories = self.filterTypeaheadCategories();
+        for(var i in self.allVenues()){
+            var venue = self.allVenues()[i];
+            if (filterTypeaheadCategories.indexOf(venue.category) >= 0){
+                filteredVenues.push(venue);
+            }
+        }
+        return filteredVenues;
     });
     self.isFilterSearchBoxSelected = ko.observable(false);
 

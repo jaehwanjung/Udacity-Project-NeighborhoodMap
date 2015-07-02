@@ -6,6 +6,11 @@ var Venue = function(data) {
     this.url = data.url;
 };
 
+var Marker = function(identifier, googleMarker){
+  this.identifier = identifier;
+    this.googleMarker = googleMarker;
+};
+
 var ViewModel = function () {
     var googleMap;
     var geocoder;
@@ -13,6 +18,8 @@ var ViewModel = function () {
     var currentAddress = '';
 
     var self = this;
+
+    var markers = [];
 
     self.filterKeyword = ko.observable('');
     self.allVenues = ko.observableArray([]);
@@ -37,14 +44,27 @@ var ViewModel = function () {
         return categories;
     });
     self.filteredVenues = ko.computed(function(){
+        for(var i in markers){
+            var marker = markers[i];
+            marker.googleMarker.setMap(null);
+        }
         var filteredVenues = [];
         var filterTypeaheadCategories = self.filterTypeaheadCategories();
         for(var i in self.allVenues()){
             var venue = self.allVenues()[i];
             if (filterTypeaheadCategories.indexOf(venue.category) >= 0){
                 filteredVenues.push(venue);
+                for(var i in markers){
+                    var marker = markers[i];
+                    var venueIdentifier = createMarkerIdentifier(venue.name, venue.location.lat, venue.location.lng);
+                    if (marker.identifier == venueIdentifier ){
+                        marker.googleMarker.setMap(googleMap);
+                    }
+                }
             }
         }
+
+
         return filteredVenues;
     });
     self.isFilterSearchBoxSelected = ko.observable(false);
@@ -92,7 +112,11 @@ var ViewModel = function () {
             currentAddressMarker.setMap(null);
         }
         var contentString = "Your Location";
-        currentAddressMarker = createMarker('Your Location', location, contentString);
+        currentAddressMarker = createMarker('Your Location', {lat:location.lat(), lng:location.lng()}, contentString);
+    }
+
+    function createMarkerIdentifier(title, lat, lng) {
+        return title + lat.toFixed(2)  + lng.toFixed(2);
     }
 
     function createMarker(title, location, contentString){
@@ -107,7 +131,8 @@ var ViewModel = function () {
         google.maps.event.addListener(marker, 'click', function () {
             infowindow.open(googleMap, marker);
         });
-        return marker;
+        var identifier = createMarkerIdentifier(title, location.lat, location.lng);
+        return new Marker(identifier, marker);
     }
 
     function populateNeighborhood(location){
@@ -120,7 +145,8 @@ var ViewModel = function () {
                     var venue = new Venue(venuesFound[i]);
                     self.allVenues.push(venue);
                     var markerContentString = createMarkerContentString(venue);
-                    createMarker(venue.name, venue.location, markerContentString);
+                    var marker = createMarker(venue.name, {lat:venue.location.lat, lng:venue.location.lng}, markerContentString);
+                    markers.push(marker);
                 }
             }
             else {

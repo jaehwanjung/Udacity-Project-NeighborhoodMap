@@ -1,18 +1,27 @@
-(function (global) {
+(function () {
     'use strict';
 
-    global.Venue = function (data) {
+    window.Venue = function (data) {
         this.name = data.name;
-        this.contact = data.contact.formattedPhone;
-        this.address = data.location.formattedAddress;
-        this.position = new Position(data.location.lat(), data.location.lng());
-        this.category = data.categories[0].name;
+        this.contact = getValueOrDefault(data.contact, 'formattedPhone', 'No contact information');
+        this.address = getValueOrDefault(data.location, 'formattedAddress', 'No address');
+        this.position = new Position(data.location.lat, data.location.lng);
+        this.category = getValueOrDefault(data.categories[0], 'name', 'No category');
         this.url = data.url;
+        this.identifier = getIdentifier(this.name, this.position);
     };
 
-    global.Venue.prototype.getIdentifier = function () {
-        return this.name + this.position.toString();
-    };
+    function getIdentifier(name, position) {
+        return name + position.toString();
+    }
 
-})(window);
+    function getValueOrDefault(target, property, defaultValue){
+        if (target === undefined || target[property] === undefined) {
+            return defaultValue;
+        }
+
+        return target[property];
+    }
+
+})();
 

@@ -1,4 +1,4 @@
-(function (global) {
+(function () {
     'use strict';
 
     var ENDPOINT = 'https://api.foursquare.com/v2/venues/search?';
@@ -48,9 +48,9 @@
         alert('Venue search engine failed.');
     }
 
-    global.venueSearchEngine = {
+    window.venueSearchEngine = {
         searchTopPicks: searchTopPicks
     };
 
-})(window);
+})();
 

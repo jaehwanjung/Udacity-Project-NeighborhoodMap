@@ -1,22 +1,19 @@
-(function (global) {
+(function () {
     'use strict';
 
-    var showFunction;
-    var hideFunction;
-
-    global.Marker = function (identifier, showFunc, hideFunc) {
+    window.Marker = function (identifier, showFunc, hideFunc) {
         this.identifier = identifier;
-        showFunction = showFunc;
-        hideFunction = hideFunc;
+        this.showFunction = showFunc;
+        this.hideFunction = hideFunc;
     };
 
-    global.Marker.prototype.show = function () {
-        showFunction();
+    window.Marker.prototype.show = function () {
+        this.showFunction();
     };
 
-    global.Marker.prototype.hide = function () {
-        hideFunction();
+    window.Marker.prototype.hide = function () {
+        this.hideFunction();
     };
 
-})(window);
+})();
 

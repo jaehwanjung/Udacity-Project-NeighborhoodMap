@@ -1,16 +1,17 @@
-(function (global) {
+(function () {
     'use strict';
 
     var googleMap;
     var geocoder;
+    var currentPosition = new Position(1, 1);
 
     var mapElement = $('#map-canvas')[0];
     var addressSearchBar = $('#addressbar')[0];
 
-    function initialize() {
+    function initialize(onInitialization) {
         initializeGoogleMap();
         initializeAddressSearchBar();
-        centerMapToCurrentUserPosition();
+        centerMapToCurrentUserPosition(onInitialization);
     }
 
     function initializeGoogleMap() {
@@ -29,10 +30,15 @@
         });
     }
 
-    function centerMapToCurrentUserPosition() {
+    function centerMapToCurrentUserPosition(onMapCentered) {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
-                onGetCurrentPositionSuccess,
+                function (response) {
+                    onGetCurrentPositionSuccess(response);
+                    if (onMapCentered) {
+                        onMapCentered();
+                    }
+                },
                 onGetCurrentPositionFailure);
         } else {
             handleGeolocationUnsupported();
@@ -45,6 +51,7 @@
     }
 
     function centerMap(position) {
+        currentPosition = position;
         googleMap.setCenter(position);
     }
 
@@ -68,7 +75,7 @@
         });
     }
 
-    function createMarker(venue) {
+    function addMarker(venue) {
         var marker = new google.maps.Marker({
             position: venue.position,
             map: googleMap,
@@ -87,19 +94,24 @@
             marker.setMap(googleMap);
         };
 
-        var hideMarker = function () {
+        var hideMarker = function  () {
             marker.setMap(null);
         };
 
-        var identifier = venue.getIdentifier();
+        var identifier = venue.identifier;
         return new Marker(identifier, showMarker, hideMarker);
     }
 
-    global.map = {
+    function getCurrentPosition() {
+        return currentPosition;
+    }
+
+    window.map = {
         initialize: initialize,
         centerMapByPosition: centerMap,
         centerMapByAddress: centerMapByAddress,
-        createMarker: createMarker
+        addMarker: addMarker,
+        getCurrentPosition: getCurrentPosition
     };
 
-})(window);
+})();

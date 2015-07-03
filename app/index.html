@@ -13,24 +13,27 @@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYFVxtFk26wbfNGXDY2JWcQWx-0EXyRz4&v=3.exp&signed_in=true&libraries=places"></script>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYFVxtFk26wbfNGXDY2JWcQWx-0EXyRz4&v=3.exp&signed_in=true&libraries=places"></script>
 </head>
 
 <body>
 <div id="map-canvas"></div>
 
 <form class="search-bar address-bar">
-    <input id="addressbar" data-bind="submit: resetNeighborhood" class="search-bar-area" placeholder="Enter your address">
-    <button class="search-bar-button" data-bind="click: resetNeighborhood"></button>
+    <input id="addressbar" data-bind="textInput:currentAddress, submit: setNeighborhood" class="search-bar-area"
+           placeholder="Enter your address">
+    <button class="search-bar-button" data-bind="click: setNeighborhood"></button>
 </form>
 
 <div class="search-bar filter-bar">
-    <input data-bind="textInput : filterKeyword, hasFocus:isFilterSearchBoxSelected" class="search-bar-area" placeholder="Type in a keyword to filter by...">
+    <input data-bind="textInput : filterKeyword, hasFocus:isFilterSearchBoxSelected" class="search-bar-area"
+           placeholder="Type in a keyword to filter by...">
     <button class="search-bar-button"></button>
 </div>
 
 <div class="search-bar-typeahead" data-bind="visible: isFilterSearchBoxSelected">
-    <ul class="search-bar-typeahead-list" data-bind="foreach: filterTypeaheadCategories">
+    <ul class="search-bar-typeahead-list" data-bind="foreach: filteredCategories">
         <li>
             <span data-bind="text: $data"></span>
         </li>
@@ -47,6 +50,12 @@
 </div>
 
 
+<script src="scripts/position.js"></script>
+<script src="scripts/marker.js"></script>
+<script src="scripts/venue.js"></script>
+<script src="scripts/map.js"></script>
+<script src="scripts/venueSearchEngine.js"></script>
+<script src="scripts/viewModel.js"></script>
 <script src="scripts/app.js"></script>
 </body>
 </html>

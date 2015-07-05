@@ -163,3 +163,15 @@ html, body, #map-canvas {
 .marker-infoWindow-content {
     font-size: 12px;
 }
+
+@media screen and (max-device-width: 700px) {
+    .search-bar.address-bar, .search-bar.filter-bar {
+        margin: auto;
+        width: 85%;
+    }
+
+    .venue-list-box {
+        margin: 100px auto;
+        width: 85%;
+    }
+}

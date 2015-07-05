@@ -12,6 +12,10 @@
         self.isFilterSearchBoxSelected = ko.observable(false);
         self.currentAddress = ko.observable('');
         self.isVenueListToggled = ko.observable(true);
+        self.isTypeaheadListMouseOver = ko.observable(false);
+        self.isTypeaheadListOn = ko.computed(function () {
+            return self.isFilterSearchBoxSelected() || self.isTypeaheadListMouseOver();
+        });
 
         self.allCategories = ko.computed(function () {
             var allVenues = self.allVenues();
@@ -64,8 +68,7 @@
                 for (var i in venues) {
                     if (venues.hasOwnProperty(i)) {
                         var venue = venues[i];
-                        var marker = map.addMarker(venue);
-                        markers[venue.identifier] = marker;
+                        markers[venue.identifier] = map.addMarker(venue);
                     }
                     self.allVenues.push(venue);
                 }
@@ -87,6 +90,18 @@
         self.clickVenueMarker = function (venue) {
             var marker = markers[venue.identifier];
             marker.click();
+        };
+
+        self.clickTypeahead = function (category) {
+            self.filterKeyword(category);
+        };
+
+        self.typeaheadListMouseOver = function () {
+            self.isTypeaheadListMouseOver(true);
+        };
+
+        self.typeaheadListMouseOut = function () {
+            self.isTypeaheadListMouseOver(false);
         };
     };
 

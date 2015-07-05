@@ -79,6 +79,15 @@ html, body, #map-canvas {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    cursor: pointer;
+}
+
+.search-bar-typeahead-list-item {
+    background-color: #FFFFFF;
+}
+
+.search-bar-typeahead-list-item:hover {
+    background-color: #FFEBD6;
 }
 
 .venue-list-box {
@@ -91,6 +100,7 @@ html, body, #map-canvas {
     box-shadow: 4px 6px 10px 0 #888888;
     max-width: 400px;
     border-radius: 4px;
+    cursor: pointer;
 }
 
 .venue-list {
@@ -98,7 +108,7 @@ html, body, #map-canvas {
     padding: 0;
     font-size: 15px;
     list-style: none;
-    height: 500px;
+    max-height: 500px;
     width: 300px;
     overflow-x: hidden;
     overflow-y: auto;

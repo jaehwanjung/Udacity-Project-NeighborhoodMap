@@ -16,7 +16,7 @@
         this.hideFunction();
     };
 
-    window.Marker.prototype.click = function(){
+    window.Marker.prototype.click = function () {
         this.clickFunction();
     }
 

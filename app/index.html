@@ -32,16 +32,17 @@
     <button class="search-bar-button"></button>
 </div>
 
-<div class="search-bar-typeahead" data-bind="visible: isFilterSearchBoxSelected">
+<div class="search-bar-typeahead" data-bind="visible: isTypeaheadListOn, event: { mouseover: $root.typeaheadListMouseOver, mouseout: $root.typeaheadListMouseOut }">
     <ul class="search-bar-typeahead-list" data-bind="foreach: filteredCategories">
-        <li>
+        <li class="search-bar-typeahead-list-item" data-bind="click:$root.clickTypeahead">
             <span data-bind="text: $data"></span>
         </li>
     </ul>
 </div>
 
 <div class="venue-list-box">
-    <p class="venue-list-title" data-bind="click:toggleVenueList">Venues (<span data-bind="text: filteredVenues().length"></span>)</p>
+    <p class="venue-list-title" data-bind="click:toggleVenueList">Venues (<span
+            data-bind="text: filteredVenues().length"></span>)</p>
     <ul class="venue-list" data-bind="visible:isVenueListToggled, foreach: filteredVenues">
         <li class="venue-list-Item" data-bind="click:$root.clickVenueMarker">
             <p class="venue-list-item-title"><span data-bind="text: name"></span></p>

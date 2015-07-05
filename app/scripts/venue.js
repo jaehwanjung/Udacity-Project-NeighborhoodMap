@@ -15,7 +15,7 @@
         return name + position.toString();
     }
 
-    function getValueOrDefault(target, property, defaultValue){
+    function getValueOrDefault(target, property, defaultValue) {
         if (target === undefined || target[property] === undefined) {
             return defaultValue;
         }

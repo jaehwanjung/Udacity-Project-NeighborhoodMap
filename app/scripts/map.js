@@ -94,7 +94,7 @@
             marker.setMap(googleMap);
         };
 
-        var hideMarker = function  () {
+        var hideMarker = function () {
             marker.setMap(null);
         };
 

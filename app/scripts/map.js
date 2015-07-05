@@ -3,16 +3,16 @@
 
     var googleMap;
     var geocoder;
-    var currentPosition = new Position(1, 1);
+    var currentPosition;
 
     var mapElement = $('#map-canvas')[0];
     var addressSearchBar = $('#addressbar')[0];
 
     var openInfoWindow;
 
-    function initialize(onInitialization) {
+    function initialize(onInitialization, onAddressAutoCompleteSelected) {
         initializeGoogleMap();
-        initializeAddressSearchBar();
+        initializeAddressSearchBar(onAddressAutoCompleteSelected);
         centerMapToCurrentUserPosition(onInitialization);
     }
 
@@ -25,10 +25,10 @@
         geocoder = new google.maps.Geocoder();
     }
 
-    function initializeAddressSearchBar() {
+    function initializeAddressSearchBar(onAddressAutoCompleteSelected) {
         var addressSearchBarAutocomplete = new google.maps.places.Autocomplete(addressSearchBar, {types: ['geocode']});
         google.maps.event.addListener(addressSearchBarAutocomplete, 'place_changed', function () {
-            self.resetNeighborhood();
+            onAddressAutoCompleteSelected(addressSearchBarAutocomplete.getPlace().formatted_address);
         });
     }
 
@@ -65,12 +65,13 @@
         alert("Browser doesn't support Geolocation. Can't get the user's current position");
     }
 
-    function centerMapByAddress(address) {
+    function centerMapByAddress(address, onCenterMapByAddress) {
         geocoder.geocode({'address': address}, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 var location = results[0].geometry.location;
                 var position = new Position(location.lat(), location.lng());
                 centerMap(position);
+                onCenterMapByAddress();
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);
             }

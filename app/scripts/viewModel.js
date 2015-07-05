@@ -64,7 +64,7 @@
         });
 
         self.initialize = function () {
-            map.initialize(populateNeighborhood);
+            map.initialize(populateNeighborhood, self.setNeighborhood);
         };
 
         function populateNeighborhood() {
@@ -81,11 +81,22 @@
             venueSearchEngine.searchTopPicks(currentPosition, addMarkersOnSuccessfulSearch);
         }
 
-        self.setNeighborhood = function () {
-            var currentAddress = self.currentAddress();
-            map.centerMapByAddress(currentAddress);
-            populateNeighborhood();
+        self.setNeighborhood = function (address) {
+            reset();
+            var currentAddress = address ? address : self.currentAddress();
+            map.centerMapByAddress(currentAddress, populateNeighborhood);
         };
+
+        function reset() {
+            self.allVenues.removeAll();
+            for (var i in markers) {
+                if (markers.hasOwnProperty(i)) {
+                    var marker = markers[i];
+                    marker.hide();
+                }
+            }
+            markers = {};
+        }
 
         self.toggleVenueList = function () {
             var listToggled = self.isVenueListToggled();

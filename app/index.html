@@ -41,10 +41,20 @@
 </div>
 
 <div class="venue-list-box">
-    <p>Venues</p>
-    <ul class="venue-list" data-bind="foreach: filteredVenues">
+    <p class="venue-list-title" data-bind="click:toggleVenueList">Venues (<span data-bind="text: filteredVenues().length"></span>)</p>
+    <ul class="venue-list" data-bind="visible:isVenueListToggled, foreach: filteredVenues">
         <li class="venue-list-Item">
-            <span data-bind="text: name"></span>
+            <p class="venue-list-item-title"><span data-bind="text: name"></span></p>
+
+            <div class="venue-list-item-content">
+                <p><span data-bind="text: contact"></span></p>
+
+                <p><span data-bind="text: address"></span></p>
+
+                <p><span data-bind="text: category"></span></p>
+
+                <p><span data-bind="text: url"></span></p>
+            </div>
         </li>
     </ul>
 </div>

@@ -11,6 +11,7 @@
         self.allVenues = ko.observableArray([]);
         self.isFilterSearchBoxSelected = ko.observable(false);
         self.currentAddress = ko.observable('');
+        self.isVenueListToggled = ko.observable(true);
 
         self.allCategories = ko.computed(function () {
             var allVenues = self.allVenues();
@@ -77,6 +78,11 @@
             map.centerMapByAddress(currentAddress);
             populateNeighborhood();
         };
+
+        self.toggleVenueList = function () {
+            var listToggled = self.isVenueListToggled();
+            self.isVenueListToggled(!listToggled);
+        }
 
     };
 

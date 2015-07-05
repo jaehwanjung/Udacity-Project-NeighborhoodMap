@@ -1,3 +1,7 @@
+/* position.js
+ * Represents a position on the map.
+ */
+
 (function () {
     'use strict';
 
@@ -11,4 +15,3 @@
     };
 
 })();
-

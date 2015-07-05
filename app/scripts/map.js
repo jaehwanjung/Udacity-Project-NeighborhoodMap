@@ -1,3 +1,8 @@
+/* map.js
+ * Represents the whole page (therefore the map).
+ * Encapsulates all map-related 3rd party APIs such as Google Maps and Geocoding
+ */
+
 (function () {
     'use strict';
 
@@ -5,17 +10,22 @@
     var geocoder;
     var currentPosition;
 
+    // The whole page DOM element for Google Maps
     var mapElement = $('#map-canvas')[0];
+
+    // The DOM element for the address search input
     var addressSearchBar = $('#addressbar')[0];
 
     var openInfoWindow;
 
+    // Initializes the map objects, centers the map, and populates the map with the neighborhood information
     function initialize(onInitialization, onAddressAutoCompleteSelected) {
         initializeGoogleMap();
         initializeAddressSearchBar(onAddressAutoCompleteSelected);
         centerMapToCurrentUserPosition(onInitialization);
     }
 
+    // Instantiates Google Maps and Geocoding objects
     function initializeGoogleMap() {
         var mapOptions = {
             center: {lat: 49.283742, lng: -123.122575},
@@ -25,6 +35,7 @@
         geocoder = new google.maps.Geocoder();
     }
 
+    // Hook up the address search input with Google Maps Autocomplete
     function initializeAddressSearchBar(onAddressAutoCompleteSelected) {
         var addressSearchBarAutocomplete = new google.maps.places.Autocomplete(addressSearchBar, {types: ['geocode']});
         google.maps.event.addListener(addressSearchBarAutocomplete, 'place_changed', function () {
@@ -32,6 +43,7 @@
         });
     }
 
+    // Initially center the map to the user's current position and populate neighborhood information around it
     function centerMapToCurrentUserPosition(onMapCentered) {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
@@ -65,6 +77,7 @@
         alert("Browser doesn't support Geolocation. Can't get the user's current position");
     }
 
+    // Find the position of an address and center the map and the neighborhood information around it
     function centerMapByAddress(address, onCenterMapByAddress) {
         geocoder.geocode({'address': address}, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
@@ -78,6 +91,7 @@
         });
     }
 
+    // Adds a marker to the map and returns it
     function addMarker(venue) {
         var marker = new google.maps.Marker({
             position: venue.position,

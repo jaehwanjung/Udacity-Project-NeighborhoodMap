@@ -1,3 +1,8 @@
+/* venue.js
+ * Represents a venue.
+ * The data passed must be the venue object from FourSquare APIs
+ */
+
 (function () {
     'use strict';
 
@@ -15,6 +20,7 @@
         return name + position.toString();
     }
 
+    // Returns the value of the property of the given object. If undefined, returns the default value provided.
     function getValueOrDefault(target, property, defaultValue) {
         if (target === undefined || target[property] === undefined) {
             return defaultValue;
@@ -24,4 +30,3 @@
     }
 
 })();
-

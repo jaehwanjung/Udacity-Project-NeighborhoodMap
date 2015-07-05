@@ -20,7 +20,7 @@
             else {
                 onUnsuccessfulSearch();
             }
-        })
+        }).fail(onFailedRequest)
     }
 
     function createRequestUrl(position) {
@@ -54,6 +54,10 @@
     window.venueSearchEngine = {
         searchTopPicks: searchTopPicks
     };
+
+    function onFailedRequest(){
+        alert('Venue search engine could not be reached.')
+    }
 
 })();
 

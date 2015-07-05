@@ -32,7 +32,8 @@
     <button class="search-bar-button"></button>
 </div>
 
-<div class="search-bar-typeahead" data-bind="visible: isTypeaheadListOn, event: { mouseover: $root.typeaheadListMouseOver, mouseout: $root.typeaheadListMouseOut }">
+<div class="search-bar-typeahead"
+     data-bind="visible: isTypeaheadListOn, event: { mouseover: $root.typeaheadListMouseOver, mouseout: $root.typeaheadListMouseOut }">
     <ul class="search-bar-typeahead-list" data-bind="foreach: filteredCategories">
         <li class="search-bar-typeahead-list-item" data-bind="click:$root.clickTypeahead">
             <span data-bind="text: $data"></span>
@@ -48,13 +49,7 @@
             <p class="venue-list-item-title"><span data-bind="text: name"></span></p>
 
             <div class="venue-list-item-content">
-                <p><span data-bind="text: contact"></span></p>
-
                 <p><span data-bind="text: address"></span></p>
-
-                <p><span data-bind="text: category"></span></p>
-
-                <p><span data-bind="text: url"></span></p>
             </div>
         </li>
     </ul>

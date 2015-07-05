@@ -84,8 +84,17 @@
             title: venue.name
         });
 
+        var infoWindowContent =
+            '<p class="marker-infoWindow-title">' + venue.name + '</p>' +
+            '<div  class="marker-infoWindow-content"' +
+            '<p>' + venue.contact + '</p>' +
+            '<p>' + venue.address + '</p>' +
+            '<p>' + venue.category + '</p>' +
+            '<p>' + venue.url + '</p>' +
+            '</div>';
+
         var infoWindow = new google.maps.InfoWindow({
-            content: venue.category
+            content: infoWindowContent
         });
 
         google.maps.event.addListener(marker, 'click', function () {

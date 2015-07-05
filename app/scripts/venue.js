@@ -7,7 +7,7 @@
         this.address = getValueOrDefault(data.location, 'formattedAddress', 'No address');
         this.position = new Position(data.location.lat, data.location.lng);
         this.category = getValueOrDefault(data.categories[0], 'name', 'No category');
-        this.url = data.url;
+        this.url = getValueOrDefault(data, 'url', 'No Url');
         this.identifier = getIdentifier(this.name, this.position);
     };
 

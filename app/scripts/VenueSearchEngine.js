@@ -37,8 +37,11 @@
         var venuesFound = response.venues;
         for (var i in venuesFound) {
             if (venuesFound.hasOwnProperty(i)) {
-                var venue = new Venue(venuesFound[i]);
-                venues.push(venue);
+                var venueFound = venuesFound[i];
+                var venue = new Venue(venueFound);
+                if (venue.category != 'Neighborhood') {
+                    venues.push(venue);
+                }
             }
         }
         return venues;

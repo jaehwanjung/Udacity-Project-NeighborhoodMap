@@ -5,7 +5,7 @@
 
         var self = this;
 
-        var markers = [];
+        var markers = {};
 
         self.filterKeyword = ko.observable('');
         self.allVenues = ko.observableArray([]);
@@ -65,7 +65,7 @@
                     if (venues.hasOwnProperty(i)) {
                         var venue = venues[i];
                         var marker = map.addMarker(venue);
-                        markers.push(marker);
+                        markers[venue.identifier] = marker;
                     }
                     self.allVenues.push(venue);
                 }
@@ -82,8 +82,12 @@
         self.toggleVenueList = function () {
             var listToggled = self.isVenueListToggled();
             self.isVenueListToggled(!listToggled);
-        }
+        };
 
+        self.clickVenueMarker = function (venue) {
+            var marker = markers[venue.identifier];
+            marker.click();
+        };
     };
 
 })();

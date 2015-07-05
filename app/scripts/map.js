@@ -17,7 +17,7 @@
     function initializeGoogleMap() {
         var mapOptions = {
             center: {lat: 49.283742, lng: -123.122575},
-            zoom: 14
+            zoom: 18
         };
         googleMap = new google.maps.Map(mapElement, mapOptions);
         geocoder = new google.maps.Geocoder();
@@ -98,8 +98,13 @@
             marker.setMap(null);
         };
 
+        var clickMarker = function(){
+            google.maps.event.trigger(marker, 'click');
+            googleMap.panTo(marker.position);
+        };
+
         var identifier = venue.identifier;
-        return new Marker(identifier, showMarker, hideMarker);
+        return new Marker(identifier, showMarker, hideMarker, clickMarker);
     }
 
     function getCurrentPosition() {

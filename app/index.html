@@ -43,7 +43,7 @@
 <div class="venue-list-box">
     <p class="venue-list-title" data-bind="click:toggleVenueList">Venues (<span data-bind="text: filteredVenues().length"></span>)</p>
     <ul class="venue-list" data-bind="visible:isVenueListToggled, foreach: filteredVenues">
-        <li class="venue-list-Item">
+        <li class="venue-list-Item" data-bind="click:$root.clickVenueMarker">
             <p class="venue-list-item-title"><span data-bind="text: name"></span></p>
 
             <div class="venue-list-item-content">

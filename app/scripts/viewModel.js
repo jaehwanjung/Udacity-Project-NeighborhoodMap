@@ -19,10 +19,15 @@
 
         self.allCategories = ko.computed(function () {
             var allVenues = self.allVenues();
-            return $.map(allVenues, function (venue) {
+            var allCategories = $.map(allVenues, function (venue) {
                 return venue.category;
             });
+            return allCategories.filter(isUnique);
         });
+
+        function isUnique(value, index, self) {
+            return self.indexOf(value) === index;
+        }
 
         self.filteredCategories = ko.computed(function () {
             var filterKeyword = self.filterKeyword();

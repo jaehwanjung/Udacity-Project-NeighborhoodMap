@@ -8,6 +8,8 @@
     var mapElement = $('#map-canvas')[0];
     var addressSearchBar = $('#addressbar')[0];
 
+    var openInfoWindow;
+
     function initialize(onInitialization) {
         initializeGoogleMap();
         initializeAddressSearchBar();
@@ -87,7 +89,11 @@
         });
 
         google.maps.event.addListener(marker, 'click', function () {
+            if (openInfoWindow) {
+                openInfoWindow.close();
+            }
             infoWindow.open(googleMap, marker);
+            openInfoWindow = infoWindow;
         });
 
         var showMarker = function () {
@@ -98,7 +104,7 @@
             marker.setMap(null);
         };
 
-        var clickMarker = function(){
+        var clickMarker = function () {
             google.maps.event.trigger(marker, 'click');
             googleMap.panTo(marker.position);
         };

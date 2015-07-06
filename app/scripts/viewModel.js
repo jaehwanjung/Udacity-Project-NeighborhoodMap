@@ -130,6 +130,10 @@
         self.typeaheadListMouseOut = function () {
             self.isTypeaheadListMouseOver(false);
         };
+
+        self.loadScript = function (callback) {
+            map.loadScript(callback);
+        };
     };
 
 })();

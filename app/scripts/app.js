@@ -10,4 +10,6 @@ var viewModel = new ViewModel();
 ko.applyBindings(viewModel);
 
 //initialize the app when the web page has completely loaded all content
-window.onload = viewModel.initialize;
+window.onload = function () {
+    viewModel.loadScript('viewModel.initialize');
+};

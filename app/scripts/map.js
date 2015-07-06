@@ -21,7 +21,7 @@
     function loadScript(callback) {
         var script = document.createElement('script');
         script.type = 'text/javascript';
-        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDYFVxtFk26wbfNGXDY2JWcQWx-0EXyRz4&v=3.exp&signed_in=true&libraries=places&callback=' + callback;
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDYFVxtFk26wbfNGXDY2JWcQWx-0EXyRz4&v=3.exp&signed_in=false&libraries=places&callback=' + callback;
         document.body.appendChild(script);
     }
 

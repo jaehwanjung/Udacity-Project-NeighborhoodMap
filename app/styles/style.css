@@ -179,3 +179,9 @@ body,
         width: 85%;
     }
 }
+
+@media screen and (max-device-height: 600px) {
+    .venue-list {
+        max-height: 400px;
+    }
+}

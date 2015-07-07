@@ -11,17 +11,17 @@
 
         var markers = {};
 
-        self.filterKeyword = ko.observable('');
-        self.allVenues = ko.observableArray([]);
-        self.isFilterSearchBoxSelected = ko.observable(false);
-        self.currentAddress = ko.observable('');
-        self.isVenueListToggled = ko.observable(true);
-        self.isTypeaheadListMouseOver = ko.observable(false);
-        self.isTypeaheadListOn = ko.computed(function () {
+        self.filterKeyword = window.ko.observable('');
+        self.allVenues = window.ko.observableArray([]);
+        self.isFilterSearchBoxSelected = window.ko.observable(false);
+        self.currentAddress = window.ko.observable('');
+        self.isVenueListToggled = window.ko.observable(true);
+        self.isTypeaheadListMouseOver = window.ko.observable(false);
+        self.isTypeaheadListOn = window.ko.computed(function () {
             return self.isFilterSearchBoxSelected() || self.isTypeaheadListMouseOver();
         });
 
-        self.allCategories = ko.computed(function () {
+        self.allCategories = window.ko.computed(function () {
             var allVenues = self.allVenues();
             var allCategories = $.map(allVenues, function (venue) {
                 return venue.category;
@@ -33,15 +33,15 @@
             return self.indexOf(value) === index;
         }
 
-        self.filteredCategories = ko.computed(function () {
+        self.filteredCategories = window.ko.computed(function () {
             var filterKeyword = self.filterKeyword();
             var allCategories = self.allCategories();
             return $.grep(allCategories, function (category) {
-                return filterKeyword == '' || category.toLowerCase().includes(filterKeyword.toLowerCase());
+                return filterKeyword === '' || category.toLowerCase().includes(filterKeyword.toLowerCase());
             });
         });
 
-        self.filteredVenues = ko.computed(function () {
+        self.filteredVenues = window.ko.computed(function () {
             var filteredCategories = self.filteredCategories();
 
             var allVenues = self.allVenues();
@@ -69,29 +69,29 @@
 
         // Initializes the whole application
         self.initialize = function () {
-            map.initialize(populateNeighborhood, self.setNeighborhood);
+            window.map.initialize(populateNeighborhood, self.setNeighborhood);
         };
 
         // Searches venues and add markers to the map
         function populateNeighborhood() {
-            var currentPosition = map.getCurrentPosition();
+            var currentPosition = window.map.getCurrentPosition();
             var addMarkersOnSuccessfulSearch = function (venues) {
                 for (var i in venues) {
                     if (venues.hasOwnProperty(i)) {
                         var venue = venues[i];
-                        markers[venue.identifier] = map.addMarker(venue);
+                        markers[venue.identifier] = window.map.addMarker(venue);
+                        self.allVenues.push(venue);
                     }
-                    self.allVenues.push(venue);
                 }
             };
-            venueSearchEngine.searchTopPicks(currentPosition, addMarkersOnSuccessfulSearch);
+            window.venueSearchEngine.searchTopPicks(currentPosition, addMarkersOnSuccessfulSearch);
         }
 
         // Centers the map, searches venues and add markers
         self.setNeighborhood = function (address) {
             reset();
             var currentAddress = address ? address : self.currentAddress();
-            map.centerMapByAddress(currentAddress, populateNeighborhood);
+            window.map.centerMapByAddress(currentAddress, populateNeighborhood);
         };
 
         function reset() {
@@ -131,7 +131,7 @@
         };
 
         self.loadScript = function (callback) {
-            map.loadScript(callback);
+            window.map.loadScript(callback);
         };
     };
 

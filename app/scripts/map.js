@@ -66,7 +66,7 @@
     }
 
     function onGetCurrentPositionSuccess(response) {
-        var position = new Position(response.coords.latitude, response.coords.longitude);
+        var position = new window.Position(response.coords.latitude, response.coords.longitude);
         centerMap(position);
     }
 
@@ -76,23 +76,23 @@
     }
 
     function onGetCurrentPositionFailure() {
-        alert("Geocode failed. Can't get the user's current position.");
+        window.alert("Geocode failed. Can't get the user's current position.");
     }
 
     function handleGeolocationUnsupported() {
-        alert("Browser doesn't support Geolocation. Can't get the user's current position");
+        window.alert("Browser doesn't support Geolocation. Can't get the user's current position");
     }
 
     // Find the position of an address and center the map and the neighborhood information around it
     function centerMapByAddress(address, onCenterMapByAddress) {
         geocoder.geocode({'address': address}, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
+            if (status === google.maps.GeocoderStatus.OK) {
                 var location = results[0].geometry.location;
-                var position = new Position(location.lat(), location.lng());
+                var position = new window.Position(location.lat(), location.lng());
                 centerMap(position);
                 onCenterMapByAddress();
             } else {
-                alert('Geocode was not successful for the following reason: ' + status);
+                window.alert('Geocode was not successful for the following reason: ' + status);
             }
         });
     }
@@ -140,7 +140,7 @@
         };
 
         var identifier = venue.identifier;
-        return new Marker(identifier, showMarker, hideMarker, clickMarker);
+        return new window.Marker(identifier, showMarker, hideMarker, clickMarker);
     }
 
     function getCurrentPosition() {

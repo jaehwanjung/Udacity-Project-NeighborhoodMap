@@ -24,6 +24,6 @@
 
     window.Marker.prototype.click = function () {
         this.clickFunction();
-    }
+    };
 
 })();

@@ -20,14 +20,14 @@
     function searchTopPicks(position, onSuccessfulSearchFunc) {
         var url = createRequestUrl(position);
         $.getJSON(url, function (data) {
-            if (data.meta.code == 200) {
+            if (data.meta.code === 200) {
                 var venues = getVenues(data.response);
                 onSuccessfulSearchFunc(venues);
             }
             else {
                 onUnsuccessfulSearch();
             }
-        }).fail(onFailedRequest)
+        }).fail(onFailedRequest);
     }
 
     // Creates the REST API string for FourSquare
@@ -47,8 +47,8 @@
         for (var i in venuesFound) {
             if (venuesFound.hasOwnProperty(i)) {
                 var venueFound = venuesFound[i];
-                var venue = new Venue(venueFound);
-                if (venue.category != 'Neighborhood') {
+                var venue = new window.Venue(venueFound);
+                if (venue.category !== 'Neighborhood') {
                     venues.push(venue);
                 }
             }
@@ -57,11 +57,11 @@
     }
 
     function onUnsuccessfulSearch() {
-        alert('Venue search engine failed.');
+        window.alert('Venue search engine failed.');
     }
 
     function onFailedRequest() {
-        alert('Venue search engine could not be reached.')
+        window.alert('Venue search engine could not be reached.');
     }
 
     window.venueSearchEngine = {

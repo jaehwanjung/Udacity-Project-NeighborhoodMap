@@ -2,7 +2,6 @@
  * Represents the view model of Model-View-View Model (MVVM) pattern
  */
 
-
 (function () {
     'use strict';
 
